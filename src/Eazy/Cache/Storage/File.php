@@ -104,7 +104,11 @@ class File implements StorageInterface
     {
         $filename = $this->keyToFile($key);
 
-        unlink($filename);
+        if (file_exists($filename)) {
+            return unlink($filename);
+        }
+
+        return false;
     }
 
     protected function keyToFile($key)
@@ -112,7 +116,10 @@ class File implements StorageInterface
         $parts = explode(':', $key);
         $name = array_pop($parts);
 
-        return $this->path . '/' . implode('/', $parts) . '/' . md5($name) . '.cache';
+        $path = implode('/', $parts);
+        $path = $this->path . ($path ? '/' . $path : '');
+
+        return $path . '/' . md5($name) . '.cache';
     }
 
     private function expireCacheFile($filename)
