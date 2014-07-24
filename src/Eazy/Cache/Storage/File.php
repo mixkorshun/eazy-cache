@@ -109,7 +109,10 @@ class File implements StorageInterface
 
     protected function keyToFile($key)
     {
-        return $this->path . '/' . md5($key) . '.cache';
+        $parts = explode(':', $key);
+        $name = array_pop($parts);
+
+        return $this->path . '/' . implode('/', $parts) . '/' . md5($name) . '.cache';
     }
 
     private function expireCacheFile($filename)
