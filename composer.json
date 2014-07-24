@@ -1,0 +1,19 @@
+{
+    "name": "eazy/cache",
+    "type": "library",
+    "description": "The Eazy Cache Component",
+    "keywords": ["cache", "xcache", "memcached", "apc"],
+    "license": "BSD-3",
+    "authors": [
+        {
+            "name": "Vlad Bakin",
+            "email": "mixkorshun@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": { "Eazy\\": "src/" }
+    }
+}
