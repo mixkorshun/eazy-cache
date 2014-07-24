@@ -1,6 +1,7 @@
 <?php
 namespace Eazy\Cache;
 
+use Eazy\Cache\Exception\RuntimeException;
 use Eazy\Cache\Storage\StorageInterface;
 
 class Cache
@@ -18,7 +19,12 @@ class Cache
             return $this->storage->get($key);
         }
 
-        $value = call_user_func($callable);
+        try {
+            $value = call_user_func($callable);
+        } catch (\Exception $e) {
+            throw new RuntimeException('Cannot get value for cache.', 0, $e);
+        }
+
         $this->storage->set($key, $value, $ttl);
 
         return $value;
@@ -32,7 +38,11 @@ class Cache
         }
 
         ob_start();
-        call_user_func($callable);
+        try {
+            call_user_func($callable);
+        } catch (\Exception $e) {
+            throw new RuntimeException('Cannot get value for cache.', 0, $e);
+        }
         $value = ob_get_clean();
 
         $this->storage->set($key, $value, $ttl);
