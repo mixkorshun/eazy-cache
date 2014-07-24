@@ -33,7 +33,7 @@ class Apc implements StorageInterface
      */
     public function get($key)
     {
-        return apc_fetch($key, $success);
+        return apc_fetch($key);
     }
 
     /**

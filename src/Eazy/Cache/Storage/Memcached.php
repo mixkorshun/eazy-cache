@@ -36,7 +36,7 @@ class Memcached implements StorageInterface
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
+    public function get($key)
     {
         return $this->engine->get($key);
     }
