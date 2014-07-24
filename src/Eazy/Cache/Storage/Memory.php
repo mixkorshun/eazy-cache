@@ -39,7 +39,7 @@ class Memory implements StorageInterface
     public function get($key)
     {
         if ($this->has($key)) {
-            return $this->data[$key];
+            return $this->data[$key]['value'];
         }
 
         return null;
