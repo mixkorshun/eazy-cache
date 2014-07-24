@@ -8,13 +8,13 @@ class Memcached implements StorageInterface
     /** @var \Memcached $engine */
     private $engine;
 
-    public function __construct()
+    public function __construct(\Memcached $engine)
     {
         if (!extension_loaded('memcached')) {
             throw new RuntimeException('Cannot use memcached cache storage. Memcached extension is not loaded.');
         }
 
-        $this->engine = new \Memcached();
+        $this->engine = $engine;
     }
 
     /**
