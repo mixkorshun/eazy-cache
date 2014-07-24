@@ -1,7 +1,6 @@
 <?php
 namespace Eazy\Cache\Storage;
 
-
 use Eazy\Cache\Exception\RuntimeException;
 
 class Apc implements StorageInterface
