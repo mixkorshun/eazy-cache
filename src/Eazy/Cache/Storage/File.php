@@ -7,7 +7,8 @@ class File implements StorageInterface
 {
     private $path;
     private $options = array(
-        'autoremove' => true
+        'autoremove' => true,
+        'chmod' => null
     );
 
     public function __construct($path, array $options = array())
@@ -44,7 +45,7 @@ class File implements StorageInterface
             'value' => $value
         );
 
-        return file_put_contents($filename, serialize($data), LOCK_EX) !== false;
+        return $this->writeCacheFile($filename, $data);
     }
 
     /**
@@ -120,6 +121,17 @@ class File implements StorageInterface
         $path = $this->path . ($path ? '/' . $path : '');
 
         return $path . '/' . md5($name) . '.cache';
+    }
+
+    private function writeCacheFile($filename, $data)
+    {
+        $result = file_put_contents($filename, serialize($data), LOCK_EX) !== false;
+
+        if ($result || $this->options['chmod']) {
+            chmod($filename, $this->options['chmod']);
+        }
+
+        return $result;
     }
 
     private function expireCacheFile($filename)
