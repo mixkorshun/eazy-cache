@@ -127,7 +127,7 @@ class File implements StorageInterface
     private function writeCacheFile($filename, $data)
     {
         if ($this->options['mkdir']) {
-            $dir = pathinfo($filename);
+            $dir = pathinfo($filename, PATHINFO_DIRNAME);
 
             if (!file_exists($dir)) {
                 $mod = $this->options['chmod'] ? $this->options['chmod'] : 0777;
