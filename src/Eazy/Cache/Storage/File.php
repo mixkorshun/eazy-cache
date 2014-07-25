@@ -127,7 +127,7 @@ class File implements StorageInterface
     {
         $result = file_put_contents($filename, serialize($data), LOCK_EX) !== false;
 
-        if ($result || $this->options['chmod']) {
+        if ($result && $this->options['chmod']) {
             chmod($filename, $this->options['chmod']);
         }
 
