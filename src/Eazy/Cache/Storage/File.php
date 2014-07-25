@@ -8,6 +8,7 @@ class File implements StorageInterface
     private $path;
     private $options = array(
         'autoremove' => true,
+        'mkdir' => false,
         'chmod' => null
     );
 
@@ -125,6 +126,15 @@ class File implements StorageInterface
 
     private function writeCacheFile($filename, $data)
     {
+        if ($this->options['mkdir']) {
+            $dir = pathinfo($filename);
+
+            if (!file_exists($dir)) {
+                $mod = $this->options['chmod'] ? $this->options['chmod'] : 0777;
+                mkdir($dir, $mod);
+            }
+        }
+
         $result = file_put_contents($filename, serialize($data), LOCK_EX) !== false;
 
         if ($result && $this->options['chmod']) {
