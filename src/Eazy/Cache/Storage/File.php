@@ -135,9 +135,10 @@ class File implements StorageInterface
             }
         }
 
+        $isNew = !file_exists($filename);
         $result = file_put_contents($filename, serialize($data), LOCK_EX) !== false;
 
-        if ($result && $this->options['chmod']) {
+        if ($isNew && $result !== false && $this->options['chmod']) {
             chmod($filename, $this->options['chmod']);
         }
 
